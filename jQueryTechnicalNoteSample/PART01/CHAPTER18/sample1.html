@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xml:lang="ja" lang="ja">
+<head>
+	<meta charset="utf-8">
+	<title>jQuery TechnicalNote － SAMPLE</title>
+	<link rel="stylesheet" href="../../common/css/common.css">
+	<link rel="stylesheet" href="css/style.css">
+	<script src="../../common/js/jquery-1.11.3.min.js"></script>
+	<!--<script src="js/script1.js"></script>-->
+</head>
+
+<body>
+
+<header class="baseHeader">
+	<div>
+		<h1>jQuery TECHNIQUE</h1>
+		<a href="../../chapterList.html">&gt;&nbsp;CHAPTER LIST</a>
+	</div>
+</header>
+
+<div id="wrapper">
+
+	<div class="delayLoad">
+		<ul>
+			<li><img src="img/photo1.jpg" alt=""></li>
+			<li><img src="img/photo2.jpg" alt=""></li>
+			<li><img src="img/photo3.jpg" alt=""></li>
+			<li><img src="img/photo4.jpg" alt=""></li>
+			<li><img src="img/photo5.jpg" alt=""></li>
+			<li><img src="img/photo6.jpg" alt=""></li>
+			<li><img src="img/photo7.jpg" alt=""></li>
+			<li><img src="img/photo8.jpg" alt=""></li>
+			<li><img src="img/photo9.jpg" alt=""></li>
+			<li><img src="img/photo10.jpg" alt=""></li>
+		</ul>
+	</div><!-- /.delayLoad -->
+
+</div><!-- /#wrapper -->
+
+<footer class="baseFooter">
+	<small>Copyright &copy; SB Creative Corp. All Rights Reserved.</small>
+	<footer>
+
+</body>
+<script>
+	var CCK = CCK || {};
+	CCK.TRAINING = {};
+
+	CCK.TRAINING.DELAY_LOAD = {
+
+		DELAY_TIME: 100,
+		ANIMATION_SPEED: 1000,
+
+		init: function () {
+			this.setParameters();
+			this.bindEvent();
+		},
+		setParameters: function () {
+			this.$imgContainer = $('.delayLoad').find('ul');
+			this.$img = this.$imgContainer.find('li');
+		},
+		bindEvent: function () {
+			var _self = this;
+			$(window).on('load', function () {
+				_self.showImg();
+			})
+		},
+		showImg: function () {
+			var _self = this;
+			this.$img.each(function (i) {
+//				console.log(this.$img.length);
+				$(this).delay(_self.DELAY_TIME * (i + 1)).css({
+					visibility: 'visible',
+					opacity: '0'
+				}).animate({opacity: '1'}, _self.ANIMATION_SPEED);
+			})
+		}
+	};
+
+	CCK.TRAINING.DELAY_LOAD.init();
+
+</script>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lesson13</title>
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/script.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <h1>Tooltip</h1>
+  <ul>
+    <li><img src="img/icon1.png" width="150" height="150" alt="Information"></li>
+    <li><img src="img/icon2.png" width="150" height="150" alt="Help"></li>
+    <li><img src="img/icon3.png" width="150" height="150" alt="Contact"></li>
+  </ul>
+</div>
+</body>
+<script>
+
+  var CCK = CCK || {};
+  CCK.TRAINING = {};
+
+  CCK.TRAINING.TOOLTIP = {
+
+    FADE_IN_SPEED : 1000,
+    FADE_OUT_SPEED : 500,
+
+    init: function () {
+      this.setParameters();
+      this.bindEvent();
+    },
+    setParameters: function () {
+      this.$li = $('li');
+      $('body').append('<div id="tooltip"><p></p><span id="arrow"></span></div>');
+      this.$tooltip = $('#tooltip');
+      this.$arrow = $('#arrow');
+      this.$tooltip.hide();
+    },
+    bindEvent: function () {
+      var _self = this;
+      this.$li.hover(function () {
+        _self.showTooltip(this);
+      }, function () {
+        _self.hideTooltip();
+      })
+    },
+    showTooltip: function (target) {
+      var $target = $(target);
+      this.$tooltip.children('p').text($target.children('img').attr('alt'));
+      this.$tooltip.css({
+        'top': $target.offset().top - this.$tooltip.outerHeight() - parseInt(this.$arrow.css('border-top-width')),
+        'left': $target.offset().left + $target.outerWidth() / 2 - this.$tooltip.outerWidth() / 2
+      }).stop().fadeIn(this.FADE_IN_SPEED);
+    },
+    hideTooltip : function(){
+      this.$tooltip.stop().fadeOut(this.FADE_OUT_SPEED);
+    }
+  };
+
+  CCK.TRAINING.TOOLTIP.init();
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

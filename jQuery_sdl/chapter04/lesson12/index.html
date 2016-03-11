@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lesson12</title>
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/script.js"></script>
+</head>
+<body>
+<header>
+  <h1>Photo Caption</h1>
+</header>
+<main>
+  <ul>
+    <li><img src="img/img1.jpg" alt="photo1：L orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." width="320" height="200"></li>
+    <li><img src="img/img2.jpg" alt="photo2：Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." width="320" height="200"></li>
+    <li><img src="img/img3.jpg" alt="photo3：Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua" width="320" height="200"></li>
+    <li><img src="img/img4.jpg" alt="photo4：Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." width="320" height="200"></li>
+    <li><img src="img/img5.jpg" alt="photo5：Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." width="320" height="200"></li>
+    <li><img src="img/img6.jpg" alt="photo6：Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." width="320" height="200"></li>
+  </ul>
+</main>
+</body>
+
+<script>
+
+	var caption = {
+
+		init : function(){
+			this.setParameters();
+			this.bindEvent();
+		},
+		setParameters: function(){
+			$li = $('ul > li');
+		},
+		bindEvent : function(){
+			var _self = this;
+			$li.mouseover(function(){
+				_self.showCaption(this);
+			});
+//			$li.mouseout(function(){
+//				_self.hideCaption(this);
+//			})
+		},
+		showCaption : function(target){
+			var $target = $(target);
+			$target.append('<div><p>' + $target.find('img').attr('alt') + '</p></div>');
+			$target.find('div').stop().fadeIn(1000);
+		},
+//		hideCaption : function(target){
+//			var $target = $(target);
+//			$target.children('div').stop().fadeOut(300);
+//
+////			$li.remove('div');
+//		}
+	};
+
+	caption.init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

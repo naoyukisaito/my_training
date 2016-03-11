@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lesson27</title>
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/script.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <header>
+    <h1></h1>
+  </header>
+  <div id="slide">
+    <ul>
+      <li><img src="img/img1.jpg" width="1000" height="500" alt="img1"></li>
+      <li><img src="img/img2.jpg" width="1000" height="500" alt="img2"></li>
+      <li><img src="img/img3.jpg" width="1000" height="500" alt="img3"></li>
+    </ul>
+    <button id="prevBtn"><img src="img/prev.png" width="29" height="50" alt="Prev"></button>
+    <button id="nextBtn"><img src="img/next.png" width="29" height="50" alt="Next"></button>
+  </div>
+  <div class="indicatorContainer">
+    <ul class="indicatorList">
+      <li class="current"><a href="1"></a></li>
+      <li><a href="2"></a></li>
+      <li><a href="3"></a></li>
+
+    </ul>
+  </div>
+</div>
+</body>
+<script>
+  var CCK = CCK || {};
+  CCK.TRAINING = {};
+
+  CCK.TRAINING.SLIDER = {
+
+    INTERVAL: 2000,
+    DURATION: 300,
+
+    init: function () {
+      this.setParameters();
+      this.setTimer();
+      this.bindEvent();
+    },
+    setParameters: function () {
+      this.$slideContainer = $('#slide').find('ul');
+      this.$list = this.$slideContainer.find('li');
+      this.$slideContainer.find('li:first-child').clone().appendTo(this.$slideContainer);
+      this.$indicatorList = $('.indicatorList');
+      this.$indicator = $('.indicatorList').find('li');
+      this.currentNum = 1;
+    },
+    setTimer: function(){
+      var _self = this;
+      var timer = setInterval(function(){
+        _self.moveElement();
+      } ,this.INTERVAL);
+    },
+    moveElement: function(){
+      if(this.currentNum == this.$list.size() + 1){
+        this.currentNum = 1;
+        this.$slideContainer.css('left', 0);
+      }
+      this.$slideContainer.stop().animate({left: -this.$list.width() * this.currentNum}, this.DURATION);
+
+      if(this.currentNum == this.$list.size()){
+        this.$indicator.removeClass('current').eq(0).addClass('current');
+      } else {
+        this.$indicator.removeClass('current').eq(this.currentNum).addClass('current');
+      }
+
+      this.currentNum++;
+    },
+    bindEvent: function () {
+      console.log('b');
+    }
+  };
+
+  $(function(){
+    CCK.TRAINING.SLIDER.init();
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

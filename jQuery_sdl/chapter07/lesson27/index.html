@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lesson27</title>
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/script.js"></script>
+</head>
+<body>
+<div id="wrapper">
+  <header>
+    <h1>Slider</h1>
+  </header>
+  <div id="slide">
+    <ul>
+      <li><img src="img/img1.jpg" width="1000" height="500" alt="img1"></li>
+      <li><img src="img/img2.jpg" width="1000" height="500" alt="img2"></li>
+      <li><img src="img/img3.jpg" width="1000" height="500" alt="img3"></li>
+    </ul>
+    <button id="prevBtn"><img src="img/prev.png" width="29" height="50" alt="Prev"></button>
+    <button id="nextBtn"><img src="img/next.png" width="29" height="50" alt="Next"></button>
+  </div>
+  <div class="indicator">
+    <ul class="indicatorList">
+      <li class="current"><a href="1"></a></li>
+      <li><a href="2"></a></li>
+      <li><a href="3"></a></li>
+
+    </ul>
+  </div>
+</div>
+</body>
+<script>
+  var CCK = CCK || {};
+  CCK.TRAINING = {};
+
+  CCK.TRAINING.SLIDER = {
+
+    INTERVAL : 2000,
+    DURATION : 300,
+
+    init : function(){
+      this.setParameters();
+      this.bindEvent();
+//      this.makeIndicator();
+      this.setTimer();
+    },
+    setParameters : function(){
+      this.$container = $('#slide ul');
+      this.$content = $('#slide ul li');
+      this.$contentWidth = this.$content.width();
+      this.$next = $('#nextBtn');
+      this.$prev = $('#prevBtn');
+      this.endPosition = -this.$contentWidth * this.$content.length;
+      $('#slide ul li:first-child').clone(true).appendTo(this.$container);
+
+      this.$indicatorList = $('.indicatorList');
+      this.$indicator = this.$indicatorList.find('li');
+
+      this.index = 0;
+    },
+    bindEvent : function(){
+      var _self = this;
+      this.$next.on('click', function(){
+        clearInterval(_self.timer);
+        _self.moveContainer(1, _self.endPosition, 0);
+        _self.moveIndicator(+1, 0);
+        _self.setTimer();
+      });
+      this.$prev.on('click', function(){
+        clearInterval(_self.timer);
+        _self.moveContainer(-1, 0, _self.endPosition);
+        _self.moveIndicator(-1, _self.$indicator.size() - 2);
+        _self.setTimer();
+      });
+      this.$indicator.on('click', function(){
+        _self.moveByIndicator(this);
+      })
+    },
+    moveContainer : function(moveDirection, positionCondition, flexiblePosition){
+      if(this.$container.is(':animated')){
+        return;
+      }
+      var containerLeft = this.$container.position().left;
+      if(containerLeft == positionCondition){
+        this.$container.css('left', flexiblePosition);
+        containerLeft = flexiblePosition;
+      }
+      this.$container.stop().animate({left: containerLeft - this.$contentWidth * moveDirection}, this.DURATION);
+    },
+    setTimer : function(){
+      var _self = this;
+      this.timer = setInterval(function(){
+        _self.moveIndicator(+1, 0);
+        _self.moveContainer(1, _self.endPosition, 0);
+      }, _self.INTERVAL)
+    },
+    moveIndicator : function(direction, x){
+//      if($('.current').index() == this.$indicator.size() -1){
+//        $('.current').removeClass('current');
+//        this.$indicatorList.find('li:first-child').addClass('current');
+//      }
+////      console.log($('.current').index());
+//      $('.current').eq($('.current').index()).addClass('current').siblings().removeClass('current');
+
+
+      var current = $('.current').index(),
+          size = this.$indicator.size() - 1;
+      if(current == size){
+        this.$indicator.removeClass('current');
+        this.$indicator.eq(x).addClass('current');
+
+      } else {
+  //      console.log(current);
+        this.$indicator.removeClass('current');
+  //      console.log(this.$indicator.eq($('.current').index() + 1).find('a').attr('href'));
+        this.$indicator.eq(current + 1 * direction).addClass('current');
+      }
+
+
+
+//      var currentIndex = $('.indicatorList > .current').index(),
+//              lastElementIndex = this.$indicator.size() -1,
+//              nextIndex = (currentIndex == lastElementIndex) ? 0 : (currentIndex + 1),
+//              $sameLi = this.$indicator.eq(nextIndex);
+//
+//      this.$indicator.removeClass('current');
+//      $sameLi.addClass('current');
+    },
+//    makeIndicator : function(){
+//      for(var i = 0, l = this.$content.size(); i < l - 1; i++){
+//        this.$indicatorList.append('<li><a href=""></a></li>');
+//      }
+//      this.$indicator.eq(0).addClass('current');
+//    },
+    moveByIndicator : function(trigger){
+      var $trigger = $(trigger);
+      this.index++;
+      if(this.$container.is(':animated')){
+        return;
+      }
+      clearInterval(this.timer);
+      this.$container.animate({left: -this.$content.eq($trigger.index()).position().left});
+      $('.current').removeClass('current');
+      $trigger.addClass('current');
+      this.setTimer();
+    }
+  };
+
+  $(function(){
+    CCK.TRAINING.SLIDER.init();
+  });
+
+
+
+//  var CCK = CCK || {};
+//  CCK.TRAINING = {};
+//
+//  CCK.TRAINING.SLIDER = {
+//
+//    INTERVAL : 3000,
+//    DURATION : 500,
+//
+//    init : function(){
+//      this.setParameters();
+////      this.slideTimer();
+//      this.bindEvent();
+////      this.setPosition();
+//      this.setTimer();
+//    },
+//    setParameters : function(){
+//      this.$container = $('#slide ul');
+//      this.$content = $('#slide ul li');
+//      this.$next = $('#nextBtn');
+//      this.$prev = $('#prevBtn');
+//    },
+//    bindEvent : function(){
+//      var _self = this;
+//      this.$next.on('click', function(){
+//        console.log('a');
+//        if(_self.$container.is(':animated')){
+//          return;
+//        }
+//        clearInterval(_self.timer);
+//        _self.slideContent(+1);
+//      });
+//      this.$prev.on('click', function(){
+//        if(_self.$container.is(':animated')){
+//          return;
+//        }
+//        clearInterval(_self.timer);
+//        _self.slideContent(-1);
+//      });
+//    },
+////    setPosition : function(){
+////      var _self = this;
+////      this.setTimer();
+////    },
+//    setTimer : function(){
+//      this.$container.prepend($('#slide ul li:last-child')).css('left', -1000);
+//      this.timer = setInterval($.proxy(this.slideContent, this, +1), this.INTERVAL);
+//    },
+//    slideContent : function(num){
+//      console.log(this.$container);
+//      var _self = this;
+//      this.$container.animate({'left': '-=' + 1000 * num + 'px'}, this.DURATION, function(){
+//        _self.$container.append($('#slide ul li:first-child'));
+//        _self.$container.css('left', -1000 * num);
+//        })
+//    }
+//  };
+//
+//  CCK.TRAINING.SLIDER.init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

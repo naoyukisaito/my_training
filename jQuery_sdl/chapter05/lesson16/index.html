@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lesson16</title>
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="css/style.css">
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/script.js"></script>
+</head>
+<body>
+<div id="bg1">
+  <div id="bg2">
+    <header>
+      <h1>Parallax</h1>
+    </header>
+    <main>
+      <div id="slide">
+        <div id="sections">
+          <section>
+            <h1>Title1</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </section>
+          <section>
+            <h1>Title2</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </section>
+          <section>
+            <h1>Title3</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </section>
+          <section>
+            <h1>Title4</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </section>
+        </div>
+      </div>
+      <ul>
+        <li><a href="#" class="current">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+      </ul>
+    </main>
+  </div>
+</div>
+</body>
+<script>
+
+  var CCK = CCK || {};
+  CCK.PARALLAX = {
+
+    SHORT_DISTANCE : 20,
+    MIDDLE_DISTANCE : 100,
+    LONG_DISTANCE : 200,
+
+    init : function(){
+      this.setParameters();
+      this.bindEvent();
+    },
+    setParameters : function(){
+      this.$sectionContainer = $('#sections');
+      this.$section = $('section');
+      this.$indicator = $('ul > li > a');
+      this.$body =  $('body');
+      this.$bg1 = $('#bg1');
+      this.$bg2 = $('#bg2');
+    },
+    bindEvent : function(){
+      var _self = this;
+      this.$indicator.on('click', function(){
+        _self.moveSection(this);
+        _self.moveBackground(this);
+        _self.changeIndicator(this);
+      })
+    },
+    moveSection : function(trigger){
+      var $trigger = $(trigger);
+      var index = $trigger.html() - 1;
+      this.$sectionContainer.animate({'left': index  * (-this.$section.width()) + 'px'});
+    },
+    moveBackground : function(trigger){
+      var $trigger = $(trigger);
+      var index = $trigger.html() - 1;
+      this.$body.css('background-position', index * this.SHORT_DISTANCE + 'px 100%');
+      this.$bg1.css('background-position', index * this.MIDDLE_DISTANCE + 'px 100%');
+      this.$bg2.css('background-position', index * this.LONG_DISTANCE + 'px 100%');
+    },
+    changeIndicator : function(trigger){
+      var $trigger = $(trigger);
+      this.$indicator.removeClass('current');
+      $trigger.addClass('current');
+    }
+  };
+
+  CCK.PARALLAX.init();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>
