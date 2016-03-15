@@ -82,6 +82,14 @@
 			this.$container = $('#tabAccordion');
 			this.$trigger = this.$container.find('dt');
 			this.$target = this.$container.find('dd');
+
+
+			
+			this.switchPoint = 768;
+			if(this.switchPoint < $(window).width()){
+				console.log('a');
+				this.$container.find('dl:first-child').find('dd').show();
+			}
 		},
 		bindEvent: function () {
 			var _self = this;
