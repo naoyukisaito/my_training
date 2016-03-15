@@ -92,9 +92,11 @@
 		},
 		showContent: function(trigger){
 			var $trigger = $(trigger),
-				currentIndex = $trigger.parent().index();
-			console.log(currentIndex);
+				$dl = $trigger.parent();
 
+			this.$target.hide();
+			$dl.find('dd').show();
+//			console.log();
 		}
 
 	};
