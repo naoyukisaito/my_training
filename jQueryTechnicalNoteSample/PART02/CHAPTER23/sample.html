@@ -73,6 +73,8 @@
 
 	var CCK = {
 
+		switchPoint: 768,
+
 		init: function () {
 			this.setParameters();
 			this.bindEvent();
@@ -82,13 +84,24 @@
 			this.$container = $('#tabAccordion');
 			this.$trigger = this.$container.find('dt');
 			this.$target = this.$container.find('dd');
+
 		},
 		bindEvent: function () {
 			var _self = this;
 			this.$trigger.on('click', function(){
-				_self.showContent(this);
-//				console.log(this);
+				if(_self.switchPoint < $(window).width()){
+//					console.log('ok');
+					_self.showContent(this);
+				}
+			});
+			$(window).on('load', function(){
+				_self.checkWidth();
 			})
+		},
+		checkWidth: function(){
+			if(this.switchPoint < $(window).width()){
+				this.$container.find('dl:first-child').find('dd').show();
+			}
 		},
 		showContent: function(trigger){
 			var $trigger = $(trigger),
